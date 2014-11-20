@@ -9,29 +9,20 @@ public class Me implements ISprite {
 
 	private Context context;
 	private Bitmap myCar;
-	private static int POS_X;
-	private static int POS_Y;
-
-	//public static int speed = 6;
+	private static final int POS_Y = 215;
+	private static final int MIDDLE = 213; //LEFTMOST=80; RIGHTMOST=346;
 
 	public Me(Context context) {
 		this.context = context;
 		myCar = BitmapFactory.decodeResource(this.context.getResources(),R.drawable.me);
-		POS_Y = 215;
-		POS_Y = 213;
 	}
-
-	public static void setPOS_X(int pOS_X) {
-		POS_X = pOS_X;
-	}
-
-	public static void setPOS_Y(int pOS_Y) {
-		POS_Y = pOS_Y;
-	}
-
+	
 	@Override
 	public void onDraw(Canvas canvas) {
-		canvas.drawBitmap(myCar, POS_X, POS_Y, null);
+		float temp = MainActivity.getY();
+		float pos = (temp > 10) ? 10 : (temp < -10) ? -10 : temp;		
+		int x = MIDDLE - Math.round(pos * 13.3f);
+		canvas.drawBitmap(myCar, x, POS_Y, null);
 	}
 
 }
