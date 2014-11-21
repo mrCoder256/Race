@@ -1,5 +1,8 @@
 package ua.stu.race;
 
+import ua.stu.race.sprites.Me;
+import ua.stu.race.sprites.NaukExample;
+import ua.stu.race.sprites.Road;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;

@@ -23,7 +23,6 @@ public class GameThread extends Thread {
 	@Override
 	public void run() {
 		Looper.prepare();
-		long ticksPS = 1000 / FPS;
 		long startTime;
 		long sleepTime;
 
@@ -40,6 +39,9 @@ public class GameThread extends Thread {
 					view.getHolder().unlockCanvasAndPost(canvas);
 				}
 			}
+			float temp = MainActivity.getX(); //15..25..35
+			float corner = (temp > 35) ? 35 : (temp < 15) ? 15 : temp;	
+			long ticksPS = 1000 / (FPS + (25 - (long)corner) * 2);
 			sleepTime = ticksPS - (System.currentTimeMillis() - startTime);
 			try {
 				if (sleepTime > 0)

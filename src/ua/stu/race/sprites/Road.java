@@ -1,7 +1,9 @@
-package ua.stu.race;
+package ua.stu.race.sprites;
 
 import java.util.ArrayList;
 
+import ua.stu.race.R;
+import ua.stu.race.R.drawable;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -22,8 +24,8 @@ public class Road implements ISprite {
 	public Road(Context context) {
 		this.context = context;
 		sprites = new ArrayList<Point>();
-		roadSprite = BitmapFactory.decodeResource(this.context.getResources(),R.drawable.wood);
-		roadSprite2 = BitmapFactory.decodeResource(this.context.getResources(),R.drawable.wood);
+		roadSprite = BitmapFactory.decodeResource(this.context.getResources(),R.drawable.road);
+		roadSprite2 = BitmapFactory.decodeResource(this.context.getResources(),R.drawable.road);
 		initSprites();
 
 	}

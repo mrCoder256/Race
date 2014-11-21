@@ -1,5 +1,8 @@
-package ua.stu.race;
+package ua.stu.race.sprites;
 
+import ua.stu.race.MainActivity;
+import ua.stu.race.R;
+import ua.stu.race.R.drawable;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

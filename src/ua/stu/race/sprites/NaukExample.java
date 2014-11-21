@@ -1,6 +1,7 @@
-package ua.stu.race;
+package ua.stu.race.sprites;
 
 import java.util.Random;
+
 import android.annotation.SuppressLint;
 import android.graphics.Canvas;
 import android.graphics.Color;

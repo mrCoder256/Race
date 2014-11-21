@@ -1,4 +1,4 @@
-package ua.stu.race;
+package ua.stu.race.sprites;
 
 import android.graphics.Canvas;
 
