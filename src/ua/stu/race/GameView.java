@@ -1,5 +1,6 @@
 package ua.stu.race;
 
+import ua.stu.race.sprites.Traffic;
 import ua.stu.race.sprites.Me;
 import ua.stu.race.sprites.NaukExample;
 import ua.stu.race.sprites.Road;
@@ -15,15 +16,18 @@ public class GameView extends SurfaceView {
 
 	private Road road;
 	private Me me;
+	private Traffic traffic;
 	
 	//will be removed
 	private NaukExample nauk;
+
 	
 	public GameView(Context context) {
 		super(context);
 		
 		road = new Road(context);
 		me = new Me(context);
+		traffic = new Traffic(context);
 		
 		//will be removed
 		nauk = new NaukExample();
@@ -58,6 +62,7 @@ public class GameView extends SurfaceView {
 		//canvas.drawColor(Color.WHITE); //clear screen
 		road.onDraw(canvas);
 		me.onDraw(canvas);
+		traffic.onDraw(canvas);
 		//nauk.onDraw(canvas);
 	}
 }
