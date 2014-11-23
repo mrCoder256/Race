@@ -1,12 +1,13 @@
 package ua.stu.race;
 
-import ua.stu.race.sprites.Traffic;
+import ua.stu.race.sprites.Car;
 import ua.stu.race.sprites.Me;
-import ua.stu.race.sprites.NaukExample;
 import ua.stu.race.sprites.Road;
+import ua.stu.race.sprites.Traffic;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -18,19 +19,12 @@ public class GameView extends SurfaceView {
 	private Me me;
 	private Traffic traffic;
 	
-	//will be removed
-	private NaukExample nauk;
-
-	
 	public GameView(Context context) {
 		super(context);
 		
 		road = new Road(context);
 		me = new Me(context);
 		traffic = new Traffic(context);
-		
-		//will be removed
-		nauk = new NaukExample();
 		
 		mThread = new GameThread(this);
 
@@ -53,16 +47,23 @@ public class GameView extends SurfaceView {
 			}
 
 			public void surfaceChanged(SurfaceHolder holder, int format,
-					int width, int height) {
+				int width, int height) {
 			}
 		});
 	}
 
 	public void onDraw(Canvas canvas) {
-		//canvas.drawColor(Color.WHITE); //clear screen
 		road.onDraw(canvas);
 		me.onDraw(canvas);
 		traffic.onDraw(canvas);
-		//nauk.onDraw(canvas);
+		detectCollision(traffic.getCars()[0], me);
+	}
+	
+	private void detectCollision(Car car, Me player) {
+		Rect r1 = car.getRect();
+		Rect r2 = player.getRect();
+		if (r1.intersect(r2)) {
+			mThread.setRunning(false);
+		}
 	}
 }

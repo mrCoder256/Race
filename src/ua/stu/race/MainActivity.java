@@ -2,7 +2,9 @@ package ua.stu.race;
 
 import java.util.Collections;
 import java.util.List;
-
+import ua.stu.race.sprites.Road;
+import ua.stu.race.sprites.Traffic;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -22,6 +24,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+@SuppressLint("NewApi")
 public class MainActivity extends Activity implements SensorEventListener {
 
     private SensorManager sManager;  
@@ -124,6 +127,8 @@ public class MainActivity extends Activity implements SensorEventListener {
         setX(event.values[2]);  
         setY(event.values[1]);
         setZ(event.values[0]);
+        Road.setSpeed((int)((90 - X) / 10) + 3);
+        Traffic.setSpeed((int)((90 - X) / 10) + 2);
 	}
 
 	public static float getX() {

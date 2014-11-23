@@ -2,19 +2,21 @@ package ua.stu.race.sprites;
 
 import ua.stu.race.MainActivity;
 import ua.stu.race.R;
-import ua.stu.race.R.drawable;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 
 public class Me implements ISprite {
 
 	private Context context;
 	private Bitmap myCar;
-	private static final int POS_Y = 215;
-	private static final int MIDDLE = 213; //LEFTMOST=80; RIGHTMOST=346;
+	private static int POS_Y = 215;
+	private static int MIDDLE = 213; //LEFTMOST=80; RIGHTMOST=346;
 
+	private int POS_X = 0;
+	
 	public Me(Context context) {
 		this.context = context;
 		myCar = BitmapFactory.decodeResource(this.context.getResources(),R.drawable.me);
@@ -22,10 +24,19 @@ public class Me implements ISprite {
 	
 	@Override
 	public void onDraw(Canvas canvas) {
+		POS_Y = canvas.getHeight() - 10 - myCar.getHeight();
+		MIDDLE = (canvas.getWidth() - myCar.getWidth()) / 2;
 		float temp = MainActivity.getY();
 		float pos = (temp > 10) ? 10 : (temp < -10) ? -10 : temp;		
 		int x = MIDDLE - Math.round(pos * 13.3f);
+		POS_X = x;
 		canvas.drawBitmap(myCar, x, POS_Y, null);
 	}
+	
+	public Rect getRect() {
+		return new Rect(POS_X, POS_Y, POS_X + myCar.getWidth(), POS_Y + myCar.getHeight());
+	}
+	
+	
 
 }

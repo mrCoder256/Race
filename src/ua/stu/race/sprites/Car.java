@@ -1,6 +1,7 @@
 package ua.stu.race.sprites;
 
 import android.graphics.Bitmap;
+import android.graphics.Rect;
 
 public class Car {
 	
@@ -47,6 +48,10 @@ public class Car {
 
 	public void setVisible(boolean visible) {
 		this.visible = visible;
+	}
+	
+	public Rect getRect() {
+		return new Rect(x, y, x + picture.getWidth(), y + picture.getHeight());
 	}
 
 }
