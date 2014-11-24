@@ -6,22 +6,37 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="ua.stu.race.MainActivity" >
+    android:textAlignment="center"
+    tools:context="com.example.lab_2.MainActivity" >
 
-    <TextView
-        android:id="@+id/textView2"
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/top5_lbl"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/top5_lbl"
+        android:layout_marginBottom="15dp" >
+
+    </ListView>
+
+    <Button
+        android:id="@+id/startBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_alignLeft="@+id/listView"
+        android:layout_alignRight="@+id/listView"
+        android:text="@string/Start_Button"
+	></Button>
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/top5_lbl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView2"
-        android:layout_marginLeft="19dp"
-        android:layout_marginTop="108dp"
-        android:layout_toRightOf="@+id/textView2"
-        android:text="TextView" />
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/startBtn"
+        android:layout_marginTop="21dp"
+        android:text="@string/top5"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>
