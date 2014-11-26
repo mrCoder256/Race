@@ -152,8 +152,12 @@ public class MainActivity extends Activity implements SensorEventListener {
         
 //        Road.setSpeed((int)((90 - X) / 10) + 3);
 //        Traffic.setSpeed((int)((90 - X) / 10) + 2);
-        Road.setSpeed((int)(X - 9) + 3);
-        Traffic.setSpeed((int)(X - 9) + 2);
+        
+//        Road.setSpeed((int)(X - 9) * 2 + 3);
+//        Traffic.setSpeed((int)(X - 9) * 2 + 2);
+
+        Road.setSpeed((int)(X) + 1);
+        Traffic.setSpeed((int)(X));
 	}
 
 

@@ -28,10 +28,10 @@ public class Me implements ISprite {
 	@Override
 	public void onDraw(Canvas canvas) {
 		POS_Y = canvas.getHeight() - 10 - myCar.getHeight();
-		MIDDLE = (canvas.getWidth() - myCar.getWidth()) / 2;
+//		MIDDLE = (canvas.getWidth() - myCar.getWidth()) / 2;
 		
-		if (POS_X == 0)
-			POS_X = MIDDLE;
+//		if (POS_X == 0)
+//			POS_X = MIDDLE;
 		
 //		float temp = MainActivity.getY();
 //		float pos = (temp > 10) ? 10 : (temp < -10) ? -10 : temp;		
@@ -43,6 +43,12 @@ public class Me implements ISprite {
 		float temp = MainActivity.getY();
 		float pos = (temp > 10) ? 10 : (temp < -10) ? -10 : temp;		
 		POS_X += Math.round(pos);
+		
+		if (POS_X + myCar.getWidth() > canvas.getWidth())
+			POS_X = canvas.getWidth() - myCar.getWidth();
+		else if (POS_X < 0)
+			POS_X = 0;
+		
 		canvas.drawBitmap(myCar, POS_X, POS_Y, null);
 		
         Log.d(TAG, String.valueOf("Me.POS_X=" + POS_X));
