@@ -16,6 +16,7 @@ public class Score implements ISprite {
 	public Score () {
 		paint = new Paint();
 		paint.setColor(Color.WHITE);
+		paint.setTextSize(15);
 		score = 0;
 	}
 	
@@ -26,7 +27,7 @@ public class Score implements ISprite {
 	@Override
 	public void onDraw(Canvas canvas) {
 		score += Road.getSpeed();
-		canvas.drawText(String.valueOf((Integer)(score/100)), x, y, paint);
+		canvas.drawText(String.valueOf((Integer)(score * 2/100)), x, y, paint);
 	}
 
 }

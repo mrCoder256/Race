@@ -17,6 +17,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -29,9 +30,13 @@ import android.widget.ListView;
 @SuppressLint("NewApi")
 public class MainActivity extends Activity implements SensorEventListener {
 
+	private static final String TAG = "myLogs";
+	
 	private ResultManager resultManager; 
 	
     private SensorManager sManager;  
+    private Sensor mAccelerometerSensor;
+    
     private static float X;
     private static float Y;
     private static float Z;
@@ -83,6 +88,20 @@ public class MainActivity extends Activity implements SensorEventListener {
 	        showTopResults();
 	       
 	        sManager = (SensorManager) getSystemService(SENSOR_SERVICE);  
+			List<Sensor> sensors = sManager.getSensorList(Sensor.TYPE_ALL);
+	        if(sensors.size() > 0)
+	        {
+	            for (Sensor sensor : sensors) {
+	                switch(sensor.getType())
+	                {
+	                case Sensor.TYPE_ACCELEROMETER:
+	                    if(mAccelerometerSensor == null) mAccelerometerSensor = sensor;
+	                    break;
+	                default:
+	                    break;
+	                }
+	            }
+		    }
 	}
 	
 	public void showTopResults() {
@@ -99,7 +118,10 @@ public class MainActivity extends Activity implements SensorEventListener {
     protected void onResume()  
     {  
         super.onResume();  
-        sManager.registerListener(this, sManager.getDefaultSensor(Sensor.TYPE_ORIENTATION),SensorManager.SENSOR_DELAY_FASTEST);  
+        sManager.registerListener(this, 
+        		mAccelerometerSensor,//sManager.getDefaultSensor(Sensor.TYPE_ORIENTATION),
+        		SensorManager.SENSOR_DELAY_FASTEST);  
+        //sManager.registerListener(this, mAccelerometerSensor, SensorManager.SENSOR_DELAY_GAME);
     }  
   
   //When this Activity isn't visible anymore  
@@ -124,8 +146,14 @@ public class MainActivity extends Activity implements SensorEventListener {
         setX(event.values[2]);  
         setY(event.values[1]);
         setZ(event.values[0]);
-        Road.setSpeed((int)((90 - X) / 10) + 3);
-        Traffic.setSpeed((int)((90 - X) / 10) + 2);
+        
+        Log.d(TAG, String.valueOf(event.values[2]) + " " + String.valueOf(event.values[1]) + 
+        		" " + String.valueOf(event.values[0]));
+        
+//        Road.setSpeed((int)((90 - X) / 10) + 3);
+//        Traffic.setSpeed((int)((90 - X) / 10) + 2);
+        Road.setSpeed((int)(X - 9) + 3);
+        Traffic.setSpeed((int)(X - 9) + 2);
 	}
 
 
