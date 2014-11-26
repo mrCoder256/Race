@@ -1,9 +1,11 @@
 package ua.stu.race;
 
-import java.util.Collections;
 import java.util.List;
+
 import ua.stu.race.sprites.Road;
 import ua.stu.race.sprites.Traffic;
+import ua.stu.result.Result;
+import ua.stu.result.ResultManager;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -27,6 +29,8 @@ import android.widget.ListView;
 @SuppressLint("NewApi")
 public class MainActivity extends Activity implements SensorEventListener {
 
+	private ResultManager resultManager; 
+	
     private SensorManager sManager;  
     private static float X;
     private static float Y;
@@ -74,29 +78,22 @@ public class MainActivity extends Activity implements SensorEventListener {
 					builder.show();
 				}
 			});
-	       showTopResults();
-	       sManager = (SensorManager) getSystemService(SENSOR_SERVICE);  
+	        
+	        resultManager = new ResultManager(this);
+	        showTopResults();
+	       
+	        sManager = (SensorManager) getSystemService(SENSOR_SERVICE);  
 	}
 	
-	  public void showTopResults() {
-	    	List<Result> results = (List<Result>) getTopResults();
-	    	if (results == null || results.isEmpty())
-	    		return;
-	    	ListView listView = (ListView) findViewById(R.id.listView);
-	        ArrayAdapter<Result> adapter = new ArrayAdapter<Result>(this,
-	            android.R.layout.simple_list_item_1, results);
-	        listView.setAdapter(adapter);
-	  }
-	    
-    public List<Result> getTopResults() {
-        StorageManager<Result> storage = new StorageManager<Result>(this);
-        List<Result> lst = (List<Result>)storage.getList();
-        if (lst == null)
-        	return null;
-        Collections.sort(lst, new ResultComparator());
-        Collections.reverse(lst);
-        return lst.subList(0, lst.size() < 5 ? lst.size() : 5);
-    }
+	public void showTopResults() {
+		List<Result> results = (List<Result>) resultManager.getTopResults();
+    	if (results == null || results.isEmpty())
+    		return;	    	
+    	ListView listView = (ListView) findViewById(R.id.listView);
+        ArrayAdapter<Result> adapter = new ArrayAdapter<Result>(this,
+            android.R.layout.simple_list_item_1, results);
+        listView.setAdapter(adapter);
+	}
 
 	@Override  
     protected void onResume()  
@@ -131,6 +128,8 @@ public class MainActivity extends Activity implements SensorEventListener {
         Traffic.setSpeed((int)((90 - X) / 10) + 2);
 	}
 
+
+	
 	public static float getX() {
 		return X;
 	}

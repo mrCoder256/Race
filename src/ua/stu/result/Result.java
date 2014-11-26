@@ -1,4 +1,4 @@
-package ua.stu.race;
+package ua.stu.result;
 
 import java.io.Serializable;
 

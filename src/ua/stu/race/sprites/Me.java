@@ -7,8 +7,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.util.Log;
 
 public class Me implements ISprite {
+
+	private static final String TAG = "myLogs";
 
 	private Context context;
 	private Bitmap myCar;
@@ -31,6 +34,8 @@ public class Me implements ISprite {
 		int x = MIDDLE - Math.round(pos * 13.3f);
 		POS_X = x;
 		canvas.drawBitmap(myCar, x, POS_Y, null);
+		
+        Log.d(TAG, String.valueOf(x));
 	}
 	
 	public Rect getRect() {

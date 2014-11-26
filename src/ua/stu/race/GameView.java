@@ -1,9 +1,6 @@
 package ua.stu.race;
 
-import ua.stu.race.sprites.Car;
-import ua.stu.race.sprites.Me;
-import ua.stu.race.sprites.Road;
-import ua.stu.race.sprites.Traffic;
+import ua.stu.race.sprites.*;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -18,6 +15,7 @@ public class GameView extends SurfaceView {
 	private Road road;
 	private Me me;
 	private Traffic traffic;
+	private Score score;
 	
 	public GameView(Context context) {
 		super(context);
@@ -25,6 +23,7 @@ public class GameView extends SurfaceView {
 		road = new Road(context);
 		me = new Me(context);
 		traffic = new Traffic(context);
+		score = new Score();
 		
 		mThread = new GameThread(this);
 
@@ -56,6 +55,7 @@ public class GameView extends SurfaceView {
 		road.onDraw(canvas);
 		me.onDraw(canvas);
 		traffic.onDraw(canvas);
+		score.onDraw(canvas);
 		detectCollision(traffic.getCars()[0], me);
 	}
 	
