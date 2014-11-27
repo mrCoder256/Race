@@ -15,8 +15,8 @@ public class Score implements ISprite {
 	
 	public Score () {
 		paint = new Paint();
-		paint.setColor(Color.WHITE);
-		paint.setTextSize(15);
+		paint.setColor(Color.CYAN);
+		paint.setTextSize(20);
 		score = 0;
 	}
 	

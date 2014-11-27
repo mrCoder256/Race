@@ -64,6 +64,7 @@ public class GameView extends SurfaceView {
 		Rect r2 = player.getRect();
 		if (r1.intersect(r2)) {
 			mThread.setRunning(false);
+			me.bang();
 		}
 	}
 }
