@@ -2,18 +2,31 @@ package ua.stu.race;
 
 import java.util.Random;
 
-import ua.stu.race.sprites.*;
+import ua.stu.race.sprites.Car;
+import ua.stu.race.sprites.Health;
+import ua.stu.race.sprites.Me;
+import ua.stu.race.sprites.Road;
+import ua.stu.race.sprites.Score;
+import ua.stu.race.sprites.Traffic;
+import ua.stu.result.Result;
+import ua.stu.result.ResultManager;
+import ua.stu.result.StorageManager;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.media.MediaPlayer;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.app.Activity;
 
 @SuppressLint("WrongCall")
 public class GameView extends SurfaceView {
+	
+	private static final String TAG = "myLogs";
+	
 	private GameThread mThread;
 
 	private Road road;
@@ -23,19 +36,25 @@ public class GameView extends SurfaceView {
 	private Health health;
 	private Random random;
 	private MediaPlayer mediaPlayer;
-	private Context context;
+	private Context mainContext;
+	private Context baseContext;
 
-	public GameView(Context context) {
-		super(context);
+	/*
+	 * mainContext - контекст MainActivity
+	 * baseContext - контекст GameViewActivity (для AlertDialog)
+	 */
+	public GameView(Context mainContext, Context baseContext) {
+		super(mainContext);
 
-		this.context = context;
-		mediaPlayer = MediaPlayer.create(context, R.raw.boom);
+		this.mainContext = mainContext;
+		this.baseContext = baseContext;
+		mediaPlayer = MediaPlayer.create(mainContext, R.raw.boom);
 		random = new Random();
-		road = new Road(context);
-		me = new Me(context);
-		traffic = new Traffic(context);
+		road = new Road(mainContext);
+		me = new Me(mainContext);
+		traffic = new Traffic(mainContext);
 		score = new Score();
-		health = new Health(context);
+		health = new Health(mainContext);
 
 		mThread = new GameThread(this);
 
@@ -90,9 +109,7 @@ public class GameView extends SurfaceView {
 		}
 
 		if (r1.intersect(r2)) {
-			// mThread.setRunning(false);
 			me.setBang(true);
-			// mThread.setRunning(false);
 			if (health.getHealth() != 0) {
 				/*
 				 * if (mediaPlayer.isPlaying()) { mediaPlayer.stop(); } //тупит
@@ -103,10 +120,33 @@ public class GameView extends SurfaceView {
 				car.setX(random.nextInt(canvas.getWidth())
 						- car.getPicture().getWidth());
 			} else {
-				// mThread.stop();
+				mThread.setRunning(false);
+				showFinishAllert();
+//				mThread.stop();
 				// Activity a = (Activity)context;
 				// a.setContentView(R.layout.activity_main);
 			}
 		}
+	}
+
+	private void showFinishAllert() {
+		int scores = Score.getScore();
+		Result currentResult = new Result(MainActivity.userName, scores);
+		ResultManager resultManager = new ResultManager(mainContext);
+		resultManager.addResult(currentResult);
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(baseContext);
+		builder.setTitle("Игра закончина!")
+			.setMessage("Вы набрали " + String.valueOf(scores) + " очков.")
+			.setCancelable(false)
+			.setNegativeButton("Окай",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.cancel();
+					}
+				});
+		AlertDialog alert = builder.create();
+		alert.show();
+
 	}
 }

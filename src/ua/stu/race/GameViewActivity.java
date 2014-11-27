@@ -60,7 +60,7 @@ public class GameViewActivity extends Activity implements SensorEventListener {
 			e.printStackTrace();
 		}
 
-		setContentView(new GameView(getBaseContext()));
+		setContentView(new GameView(getBaseContext(), this));
 
 	}
 

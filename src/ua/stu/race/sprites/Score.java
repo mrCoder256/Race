@@ -11,7 +11,7 @@ public class Score implements ISprite {
 	
 	private Paint paint;
 	
-	private int score;
+	private static int score;
 	
 	public Score () {
 		paint = new Paint();
@@ -20,8 +20,8 @@ public class Score implements ISprite {
 		score = 0;
 	}
 	
-	public void setScore(int score) {
-		this.score = score;
+	public static int getScore() {
+		return score;
 	}
 	
 	@Override

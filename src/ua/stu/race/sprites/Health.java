@@ -8,7 +8,7 @@ import android.graphics.Canvas;
 
 public class Health implements ISprite {
 
-	private int health = 5;
+	private int health = 1; //5;
 	
 	private Bitmap heart;
 	

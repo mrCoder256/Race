@@ -69,12 +69,13 @@ public class MainActivity extends Activity {
 					    public void onClick(DialogInterface dialog, int which) {
 					    	if (input.getText().toString().isEmpty())
 					    		return;
-					    	Intent intent = new Intent(MainActivity.this, GameViewActivity.class);
-					    	MainActivity.this.startActivity(intent);
+					    	MainActivity.userName = input.getText().toString();
 					    	
-					    	//MainActivity.userName = input.getText().toString();
+					    	Intent intent = new Intent(MainActivity.this, GameViewActivity.class);
+					    	MainActivity.this.startActivity(intent);					    	
+					    	
 					    	// switch to game activity
-					      // setContentView(new GameView(MainActivity.this));
+					    	// setContentView(new GameView(MainActivity.this));
 					    }
 					});
 					builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
