@@ -12,7 +12,6 @@ import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.util.Log;
 
 public class Me implements ISprite {
 
@@ -30,7 +29,7 @@ public class Me implements ISprite {
 	
 	public Me(Context context) {
 		this.context = context;
-		myCar = BitmapFactory.decodeResource(this.context.getResources(),R.drawable.me);
+		myCar = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.me);
 	}
 	
 	@Override
