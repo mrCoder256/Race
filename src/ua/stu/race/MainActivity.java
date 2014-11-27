@@ -10,6 +10,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -28,9 +29,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 @SuppressLint("NewApi")
-public class MainActivity extends Activity implements SensorEventListener {
+public class MainActivity extends Activity {
 
-	private static final String TAG = "myLogs";
 	
 	private ResultManager resultManager; 
 	
@@ -69,9 +69,12 @@ public class MainActivity extends Activity implements SensorEventListener {
 					    public void onClick(DialogInterface dialog, int which) {
 					    	if (input.getText().toString().isEmpty())
 					    		return;
-					    	MainActivity.userName = input.getText().toString();
+					    	Intent intent = new Intent(MainActivity.this, GameViewActivity.class);
+					    	MainActivity.this.startActivity(intent);
+					    	
+					    	//MainActivity.userName = input.getText().toString();
 					    	// switch to game activity
-					       setContentView(new GameView(MainActivity.this));
+					      // setContentView(new GameView(MainActivity.this));
 					    }
 					});
 					builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -114,68 +117,7 @@ public class MainActivity extends Activity implements SensorEventListener {
         listView.setAdapter(adapter);
 	}
 
-	@Override  
-    protected void onResume()  
-    {  
-        super.onResume();  
-        sManager.registerListener(this, 
-        		mAccelerometerSensor,//sManager.getDefaultSensor(Sensor.TYPE_ORIENTATION),
-        		SensorManager.SENSOR_DELAY_FASTEST);  
-        //sManager.registerListener(this, mAccelerometerSensor, SensorManager.SENSOR_DELAY_GAME);
-    }  
-  
-  //When this Activity isn't visible anymore  
-    @Override  
-    protected void onStop()  
-    {  
-        //unregister the sensor listener  
-        sManager.unregisterListener(this);  
-        super.onStop();
-    }
-
-	@Override
-	public void onAccuracyChanged(Sensor sensor, int accuracy) {
-		// TODO Auto-generated method stub		
-	}
 	
-	@Override
-	public void onSensorChanged(SensorEvent event) {
-        if (event.accuracy == SensorManager.SENSOR_STATUS_UNRELIABLE) {  
-            return;  
-        }
-        setX(event.values[2]);  
-        setY(event.values[1]);
-        setZ(event.values[0]);
-
-        Road.setSpeed((int)(X / 1.5)  + 1);
-        Traffic.setSpeed((int)(X / 1.5));
-	}
-
-
-	
-	public static float getX() {
-		return X;
-	}
-
-	public static void setX(float x) {
-		X = x;
-	}
-
-	public static float getY() {
-		return Y;
-	}
-
-	public static void setY(float y) {
-		Y = y;
-	}
-
-	public static float getZ() {
-		return Z;
-	}
-
-	public static void setZ(float z) {
-		Z = z;
-	}  
 
 
 }

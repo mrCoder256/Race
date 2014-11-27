@@ -1,5 +1,6 @@
 package ua.stu.race.sprites;
 
+import ua.stu.race.GameViewActivity;
 import ua.stu.race.MainActivity;
 import ua.stu.race.R;
 import android.content.Context;
@@ -15,8 +16,10 @@ import android.graphics.Rect;
 
 public class Me implements ISprite {
 
-	private static final String TAG = "myLogs";
+	//private static final String TAG = "myLogs";
 
+	private boolean isBang = false;
+	
 	private Canvas canvas;
 	
 	private Context context;
@@ -39,7 +42,7 @@ public class Me implements ISprite {
 		
 		POS_Y = canvas.getHeight() - 10 - myCar.getHeight();
 		
-		float temp = MainActivity.getY();	
+		float temp = GameViewActivity.getY();	
 		POS_X += Math.round(temp);
 		
 		if (POS_X + myCar.getWidth() > canvas.getWidth())
@@ -92,6 +95,14 @@ public class Me implements ISprite {
 	
 	public Rect getRect() {
 		return new Rect(POS_X, POS_Y, POS_X + myCar.getWidth(), POS_Y + myCar.getHeight());
+	}
+
+	public boolean isBang() {
+		return isBang;
+	}
+
+	public void setBang(boolean isBang) {
+		this.isBang = isBang;
 	}
 	
 	

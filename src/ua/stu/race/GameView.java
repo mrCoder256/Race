@@ -24,10 +24,10 @@ public class GameView extends SurfaceView {
 	private Random random;
 	private MediaPlayer mediaPlayer;
 	private Context context;
-	
+
 	public GameView(Context context) {
 		super(context);
-	
+
 		this.context = context;
 		mediaPlayer = MediaPlayer.create(context, R.raw.boom);
 		random = new Random();
@@ -36,7 +36,7 @@ public class GameView extends SurfaceView {
 		traffic = new Traffic(context);
 		score = new Score();
 		health = new Health(context);
-		
+
 		mThread = new GameThread(this);
 
 		getHolder().addCallback(new SurfaceHolder.Callback() {
@@ -44,7 +44,7 @@ public class GameView extends SurfaceView {
 				mThread.setRunning(true);
 				mThread.start();
 			}
-			
+
 			public void surfaceDestroyed(SurfaceHolder holder) {
 				boolean retry = true;
 				mThread.setRunning(false);
@@ -58,7 +58,7 @@ public class GameView extends SurfaceView {
 			}
 
 			public void surfaceChanged(SurfaceHolder holder, int format,
-				int width, int height) {
+					int width, int height) {
 			}
 		});
 	}
@@ -71,31 +71,41 @@ public class GameView extends SurfaceView {
 		health.onDraw(canvas);
 		detectCollision(traffic.getCars()[0], me, canvas);
 	}
-	
+
+	private long bangCnt = 0;
+
 	private void detectCollision(Car car, Me player, Canvas canvas) {
 		Rect r1 = car.getRect();
 		Rect r2 = player.getRect();
 
-		if (r1.intersect(r2)) {
-			mThread.setRunning(false);
-			
-			// #################
-			//me.bang(); - ВЗРЫВ
-			// #################
+		if (me.isBang()) {
+			if (bangCnt < 20) {
+				me.bang();
+				bangCnt++;
+			} else {
+				bangCnt = 0;
+				me.setBang(false);
+			}
 
-			//mThread.setRunning(false);
+		}
+
+		if (r1.intersect(r2)) {
+			// mThread.setRunning(false);
+			me.setBang(true);
+			// mThread.setRunning(false);
 			if (health.getHealth() != 0) {
-			/*	if (mediaPlayer.isPlaying()) {
-					mediaPlayer.stop();
-				} //тупит
-				mediaPlayer.start(); */
+				/*
+				 * if (mediaPlayer.isPlaying()) { mediaPlayer.stop(); } //тупит
+				 * mediaPlayer.start();
+				 */
 				health.decHealth();
 				car.setY(-148);
-				car.setX(random.nextInt(canvas.getWidth()) - car.getPicture().getWidth());
+				car.setX(random.nextInt(canvas.getWidth())
+						- car.getPicture().getWidth());
 			} else {
-			//	mThread.stop();
-			//	Activity a = (Activity)context;
-			//	a.setContentView(R.layout.activity_main);
+				// mThread.stop();
+				// Activity a = (Activity)context;
+				// a.setContentView(R.layout.activity_main);
 			}
 		}
 	}
