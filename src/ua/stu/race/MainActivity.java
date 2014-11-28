@@ -134,7 +134,7 @@ public class MainActivity extends Activity {
 		
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("Игра кончина!")
-			.setMessage("Вы набрали " + String.valueOf(CurrentScore.score) + " очков.")
+			.setMessage("Вы набрали " + String.valueOf((int)(CurrentScore.score * 2/100)) + " очков.")
 			.setCancelable(false)
 			.setNegativeButton("Окай",
 				new DialogInterface.OnClickListener() {
