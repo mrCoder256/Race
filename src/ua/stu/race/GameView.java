@@ -3,6 +3,7 @@ package ua.stu.race;
 import java.util.Random;
 
 import ua.stu.race.sprites.Car;
+import ua.stu.race.sprites.CurrentScore;
 import ua.stu.race.sprites.Health;
 import ua.stu.race.sprites.Me;
 import ua.stu.race.sprites.Road;
@@ -12,6 +13,7 @@ import ua.stu.result.Result;
 import ua.stu.result.ResultManager;
 import ua.stu.result.StorageManager;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -42,6 +44,8 @@ public class GameView extends SurfaceView {
 	/*
 	 * mainContext - контекст MainActivity
 	 * baseContext - контекст GameViewActivity (для AlertDialog)
+	 * 
+	 * походу нужно mainContext и baseContext поменять местами...
 	 */
 	public GameView(Context mainContext, Context baseContext) {
 		super(mainContext);
@@ -121,32 +125,24 @@ public class GameView extends SurfaceView {
 						- car.getPicture().getWidth());
 			} else {
 				mThread.setRunning(false);
-				showFinishAllert();
+				
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				Log.d("myLogs", "Before finish: " + String.valueOf(CurrentScore.score));
+				
+				Activity act = (Activity)baseContext;
+				act.finish();
+				
+//				showFinishAllert();
 //				mThread.stop();
 				// Activity a = (Activity)context;
 				// a.setContentView(R.layout.activity_main);
 			}
 		}
-	}
-
-	private void showFinishAllert() {
-		int scores = Score.getScore();
-		Result currentResult = new Result(MainActivity.userName, scores);
-		ResultManager resultManager = new ResultManager(mainContext);
-		resultManager.addResult(currentResult);
-		
-		AlertDialog.Builder builder = new AlertDialog.Builder(baseContext);
-		builder.setTitle("Игра закончина!")
-			.setMessage("Вы набрали " + String.valueOf(scores) + " очков.")
-			.setCancelable(false)
-			.setNegativeButton("Окай",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						dialog.cancel();
-					}
-				});
-		AlertDialog alert = builder.create();
-		alert.show();
-
 	}
 }

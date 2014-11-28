@@ -22,7 +22,7 @@ public class GameThread extends Thread {
 
 	@Override
 	public void run() {
-		Looper.prepare();
+//		Looper.prepare();
 		long ticksPS = 1000 / FPS;
 		long startTime;
 		long sleepTime;
@@ -53,6 +53,6 @@ public class GameThread extends Thread {
 			} catch (Exception e) {
 			} 
 		}
-		Looper.loop();
+//		Looper.loop();
 	}
 }

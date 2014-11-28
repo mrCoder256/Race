@@ -2,6 +2,7 @@ package ua.stu.race;
 
 import java.util.List;
 
+import ua.stu.race.sprites.CurrentScore;
 import ua.stu.race.sprites.Road;
 import ua.stu.race.sprites.Traffic;
 import ua.stu.result.Result;
@@ -41,7 +42,7 @@ public class MainActivity extends Activity {
     private static float Y;
     private static float Z;
 
-    public static String userName;
+	public static String userName;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -73,9 +74,6 @@ public class MainActivity extends Activity {
 					    	
 					    	Intent intent = new Intent(MainActivity.this, GameViewActivity.class);
 					    	MainActivity.this.startActivity(intent);					    	
-					    	
-					    	// switch to game activity
-					    	// setContentView(new GameView(MainActivity.this));
 					    }
 					});
 					builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -107,6 +105,16 @@ public class MainActivity extends Activity {
 	            }
 		    }
 	}
+
+    @Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+        
+        if (CurrentScore.score != 0)
+        	showScoreAllert();
+        showTopResults();
+	}
 	
 	public void showTopResults() {
 		List<Result> results = (List<Result>) resultManager.getTopResults();
@@ -116,6 +124,26 @@ public class MainActivity extends Activity {
         ArrayAdapter<Result> adapter = new ArrayAdapter<Result>(this,
             android.R.layout.simple_list_item_1, results);
         listView.setAdapter(adapter);
+	}
+
+	private void showScoreAllert() {
+		Result currentResult = new Result(MainActivity.userName, 
+			(int)(CurrentScore.score * 2/100));
+		ResultManager resultManager = new ResultManager(this);
+		resultManager.addResult(currentResult);
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("Игра кончина!")
+			.setMessage("Вы набрали " + String.valueOf(CurrentScore.score) + " очков.")
+			.setCancelable(false)
+			.setNegativeButton("Окай",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.cancel();
+					}
+				});
+		AlertDialog alert = builder.create();
+		alert.show();
 	}
 
 	

@@ -11,23 +11,17 @@ public class Score implements ISprite {
 	
 	private Paint paint;
 	
-	private static int score;
-	
 	public Score () {
 		paint = new Paint();
 		paint.setColor(Color.CYAN);
 		paint.setTextSize(20);
-		score = 0;
-	}
-	
-	public static int getScore() {
-		return score;
+		CurrentScore.score = 0;
 	}
 	
 	@Override
 	public void onDraw(Canvas canvas) {
-		score += Road.getSpeed();
-		canvas.drawText(String.valueOf((Integer)(score * 2/100)), x, y, paint);
+		CurrentScore.score += Road.getSpeed();
+		canvas.drawText(String.valueOf((int)(CurrentScore.score * 2/100)), x, y, paint);
 	}
 
 }

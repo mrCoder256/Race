@@ -31,6 +31,13 @@ public class GameViewActivity extends Activity implements SensorEventListener {
 	private GameView gameView;
 
 	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+		this.finish();
+	}
+
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
